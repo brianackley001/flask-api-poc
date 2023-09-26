@@ -14,7 +14,11 @@ videos = { }
 def abort_if_video_id_not_exists(video_id):
   if video_id not in videos:
     abort(404, message="Video ID is not valid...")
-    
+
+def abort_id_video_id_exists(video_id):
+  if video_id in videos:
+    abort(409, message="Video already exists with requested ID...")
+ 
 class Video(Resource):
   def get(self, video_id):
     abort_if_video_id_not_exists(video_id)
@@ -22,9 +26,14 @@ class Video(Resource):
   
   def put(self, video_id):
     args = video_put_args.parse_args()
+    abort_id_video_id_exists(video_id)
     videos[video_id] = args
     return videos[video_id], 201
 
+  def delete(self, video_id):
+    abort_if_video_id_not_exists(video_id)
+    del videos[video_id]
+    return '', 204
 
 api.add_resource(Video, "/video/<int:video_id>")
 
