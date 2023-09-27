@@ -8,16 +8,19 @@ data = [
   {"likes": 500, "name": "How to search for things", "views":5783}
 ]
 
-for i in range(len(data)):
-  response = requests.put(BASE + "video/" + str(i), data[i])
-  print(response.json())
+# for i in range(len(data)):
+#   response = requests.put(BASE + "video/" + str(i), data[i])
+#   print(response.json())
 
-input()
+# input()
 
 # response = requests.delete(BASE + "video/0")
 # print(response)
 # input()
 
 
-response = requests.get(BASE + "video/2")
+# response = requests.get(BASE + "video/2")
+# print(response.json())
+
+response = requests.patch(BASE + "video/1", {'likes': 23456, 'name': 'Some Random Video Title'})
 print(response.json())
